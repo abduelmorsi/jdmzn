@@ -112,15 +112,34 @@
     box-shadow: 0 0 15px rgba(216, 150, 135, 0.25);
   }
 
-  @media (max-width: 480px) {
+  @media (max-width: 768px) {
+    .site-header {
+      padding: 0.85rem 0;
+    }
+    
+    .logo-main {
+      font-size: 1.5rem;
+    }
+    
+    .logo-sub {
+      display: none; /* Hide subtitle on mobile to save vertical space and reduce redundancy with the hero card */
+    }
+
     .header-container {
       flex-direction: column;
       text-align: center;
+      gap: 0.75rem;
     }
     
     .nav-links {
       width: 100%;
       justify-content: center;
+      gap: 1.25rem;
+    }
+
+    .telegram-link {
+      padding: 0.4rem 0.8rem;
+      font-size: 0.8rem;
     }
   }
 </style>
