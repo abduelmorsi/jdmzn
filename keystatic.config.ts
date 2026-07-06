@@ -1,4 +1,4 @@
-import { config, fields, collection } from '@keystatic/core';
+import { config, fields, collection, component } from '@keystatic/core';
 
 const isProd = process.env.NODE_ENV === 'production';
 
@@ -36,6 +36,31 @@ export default config({
           images: {
             directory: 'public/images/posts',
             publicPath: '/images/posts/',
+          },
+          componentBlocks: {
+            callout: component({
+              label: 'Callout (تنبيه مخصص)',
+              preview: () => null,
+              schema: {
+                type: fields.select({
+                  label: 'نوع التنبيه (Type)',
+                  options: [
+                    { label: 'معلومات (Info)', value: 'info' },
+                    { label: 'تحذير (Warning)', value: 'warning' },
+                    { label: 'نجاح (Success)', value: 'success' },
+                    { label: 'خطأ (Error)', value: 'error' },
+                  ],
+                  defaultValue: 'info',
+                }),
+                title: fields.text({ label: 'العنوان (Title)' }),
+                content: fields.child({
+                  kind: 'block',
+                  placeholder: 'اكتب محتوى التنبيه هنا...',
+                  formatting: 'inherit',
+                  links: 'inherit',
+                }),
+              },
+            }),
           },
         }),
       },
