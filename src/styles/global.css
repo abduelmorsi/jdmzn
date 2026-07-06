@@ -3,7 +3,7 @@
   --color-bg: #f7f4ee;           /* Warm book-like parchment (Peony/Parchment blend) */
   --color-card: #ffffff;         /* Clean white card surface */
   --color-text-primary: #232a20; /* Very dark charcoal-olive green (Midnight/Olive blend) */
-  --color-text-muted: #5e6859;   /* Muted olive gray-green */
+  --color-text-muted: #4a5445;   /* Muted sage gray-green */
   --color-accent: #3b5c43;       /* Elegant deep spruce/forest green (Coffee block) */
   --color-accent-hover: #2e4a35; /* Darker hover state */
   --color-border: #e6dfcf;       /* Soft warm cream border */
@@ -98,7 +98,7 @@ blockquote, .poetry-verse {
   background-color: rgba(var(--color-accent-rgb), 0.04);
   border-right: 4px solid var(--color-accent);
   border-radius: 4px;
-  color: #fff;
+  color: var(--color-text-primary);
   position: relative;
   overflow: hidden;
 }
