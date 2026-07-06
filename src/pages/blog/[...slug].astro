@@ -139,6 +139,7 @@ const formatDate = (dateString: string) => {
     height: 100%;
     object-fit: cover;
     border-radius: 0;
+    transition: var(--transition);
   }
   
   /* Styling markdown content output */
@@ -191,7 +192,7 @@ const formatDate = (dateString: string) => {
   .article-content :global(li) {
     margin-bottom: 0.5rem;
   }
-
+ 
   @media (max-width: 768px) {
     .post-article {
       padding: 1.5rem;
