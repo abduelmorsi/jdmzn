@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import { ClientRouter } from 'astro:transitions';
 
 interface Props {
 	title: string;
@@ -9,7 +10,7 @@ interface Props {
 
 const { 
 	title, 
-	description = "جود المزن - مدونة أدبية تعنى بلملمة الشعث وشيء من التعلم", 
+	description = "جود المزن - مدونة أدبية تعنى بلملمة الشعث وشيء من التحلم", 
 	image = "/hero_banner.png" 
 } = Astro.props;
 
@@ -50,6 +51,9 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? Astro.url.origin)
 		<meta property="twitter:title" content={`${title} | جود المزن`} />
 		<meta property="twitter:description" content={description} />
 		<meta property="twitter:image" content={image} />
+
+		<!-- View Transitions -->
+		<ClientRouter />
 	</head>
 	<body>
 		<slot />
