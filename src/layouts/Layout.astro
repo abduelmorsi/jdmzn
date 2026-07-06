@@ -10,7 +10,7 @@ interface Props {
 
 const { 
 	title, 
-	description = "جود المزن - مدونة أدبية تعنى بلملمة الشعث وشيء من التحلم", 
+	description = "سنا صعب - مدونة أدبية تعنى بلملمة الشعث وشيء من التحلم", 
 	image = "/hero_banner.png" 
 } = Astro.props;
 
@@ -35,20 +35,20 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? Astro.url.origin)
 		<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&family=Aref+Ruqaa:wght@400;700&family=Tajawal:wght@400;500;700;800&family=Alexandria:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
 		<!-- Primary Meta Tags -->
-		<title>{title} | جود المزن</title>
-		<meta name="title" content={`${title} | جود المزن`} />
+		<title>{title} | سنا صعب</title>
+		<meta name="title" content={`${title} | سنا صعب`} />
 
 		<!-- Open Graph / Facebook -->
 		<meta property="og:type" content="website" />
 		<meta property="og:url" content={canonicalURL} />
-		<meta property="og:title" content={`${title} | جود المزن`} />
+		<meta property="og:title" content={`${title} | سنا صعب`} />
 		<meta property="og:description" content={description} />
 		<meta property="og:image" content={image} />
 
 		<!-- Twitter -->
 		<meta property="twitter:card" content="summary_large_image" />
 		<meta property="twitter:url" content={canonicalURL} />
-		<meta property="twitter:title" content={`${title} | جود المزن`} />
+		<meta property="twitter:title" content={`${title} | سنا صعب`} />
 		<meta property="twitter:description" content={description} />
 		<meta property="twitter:image" content={image} />
 
