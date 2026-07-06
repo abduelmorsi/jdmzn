@@ -1,20 +1,20 @@
 /* CSS Variables & Theme Design System */
 :root {
-  --color-bg: #1d221a;           /* Moody deep dark olive background (Olive block) */
-  --color-card: #262c21;         /* Elevated card surface */
-  --color-text-primary: #f5e9eb; /* Peony/parchment warm off-white (Peony block) */
-  --color-text-muted: #8b9985;   /* Muted sage gray-green */
-  --color-accent: #c0a996;       /* Parchment sand-taupe highlight (Parchment block) */
-  --color-accent-hover: #cfb9a8; /* Lighter hover state */
-  --color-border: #333d2e;       /* Muted olive border */
-  --color-accent-rgb: 192, 169, 150; /* Accent RGB values for transparency */
+  --color-bg: #f7f4ee;           /* Warm book-like parchment (Peony/Parchment blend) */
+  --color-card: #ffffff;         /* Clean white card surface */
+  --color-text-primary: #232a20; /* Very dark charcoal-olive green (Midnight/Olive blend) */
+  --color-text-muted: #5e6859;   /* Muted olive gray-green */
+  --color-accent: #3b5c43;       /* Elegant deep spruce/forest green (Coffee block) */
+  --color-accent-hover: #2e4a35; /* Darker hover state */
+  --color-border: #e6dfcf;       /* Soft warm cream border */
+  --color-accent-rgb: 59, 92, 67; /* Accent RGB values for transparency */
   
   --font-serif: 'Amiri', 'Aref Ruqaa', Georgia, serif;
   --font-sans: 'Tajawal', 'Alexandria', system-ui, -apple-system, sans-serif;
   
-  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.2);
-  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.35);
-  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.5);
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12);
   
   --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
