@@ -1,0 +1,194 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import PostCard from '../components/PostCard.astro';
+import { getCollection } from 'astro:content';
+
+// Fetch and sort posts by date
+const posts = await getCollection('posts');
+const sortedPosts = posts.sort((a, b) => 
+  new Date(b.data.publishDate).getTime() - new Date(a.data.publishDate).getTime()
+);
+---
+
+<Layout title="الرئيسية">
+	<Header />
+	
+	<main class="home-main">
+		<!-- Hero Section -->
+		<section class="hero-section fade-in">
+			<div class="hero-image-container">
+				<img src="/hero_banner.png" alt="جود المزن" class="hero-banner" />
+				<div class="hero-overlay"></div>
+			</div>
+			
+			<div class="container hero-content">
+				<div class="intro-card">
+					<p class="intro-quote">
+					"لملمةُ شعث، وشيءٌ من التحلم."
+				</p>
+					<p class="intro-text">
+						مساحة هادئة للكلمة الطيبة، والخواطر المنثورة، والتأملات الحية. هنا نجمع شتات الفكر في كلمات ونمضي معًا في دروب المعرفة.
+					</p>
+				</div>
+			</div>
+		</section>
+
+		<!-- Posts Grid -->
+		<section class="posts-section container">
+			<h2 class="section-title">آخر التدوينات</h2>
+			
+			{sortedPosts.length === 0 ? (
+				<div class="empty-state">
+					<div class="empty-icon">✍️</div>
+					<p>لا توجد تدوينات منشورة بعد.</p>
+					<p class="empty-sub">ابدأ بإضافة تدوينتك الأولى من خلال لوحة التحكم.</p>
+					<a href="/keystatic" class="btn btn-primary btn-admin-go">الذهاب للوحة التحكم</a>
+				</div>
+			) : (
+				<div class="posts-grid">
+					{sortedPosts.map(post => (
+						<PostCard post={post} />
+					))}
+				</div>
+			)}
+		</section>
+	</main>
+
+	<Footer />
+</Layout>
+
+<style>
+	.home-main {
+		display: flex;
+		flex-direction: column;
+		gap: 3.5rem;
+		padding-bottom: 4rem;
+	}
+
+	/* Hero Style */
+	.hero-section {
+		position: relative;
+		margin-bottom: 2rem;
+	}
+
+	.hero-image-container {
+		width: 100%;
+		height: 350px;
+		position: relative;
+		overflow: hidden;
+		border-bottom: 1px solid var(--color-border);
+	}
+
+	.hero-banner {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		border-radius: 0;
+	}
+
+	.hero-overlay {
+		position: absolute;
+		inset: 0;
+		background: linear-gradient(to bottom, rgba(13, 26, 24, 0.4), var(--color-bg));
+	}
+
+	.hero-content {
+		position: relative;
+		margin-top: -80px;
+		z-index: 10;
+	}
+
+	.intro-card {
+		background-color: var(--color-card);
+		border: 1px solid var(--color-border);
+		border-radius: 16px;
+		padding: 2.5rem;
+		text-align: center;
+		box-shadow: var(--shadow-lg);
+		backdrop-filter: blur(10px);
+	}
+
+	.intro-quote {
+		font-family: var(--font-serif);
+		font-size: 1.8rem;
+		font-weight: 700;
+		color: var(--color-accent);
+		margin-bottom: 1rem;
+		font-style: italic;
+	}
+
+	.intro-text {
+		color: var(--color-text-muted);
+		max-width: 600px;
+		margin: 0 auto;
+		line-height: 1.8;
+		font-size: 1.05rem;
+	}
+
+	/* Posts Section */
+	.section-title {
+		font-size: 2rem;
+		margin-bottom: 2rem;
+		position: relative;
+		display: inline-block;
+		padding-bottom: 0.5rem;
+	}
+
+	.section-title::after {
+		content: '';
+		position: absolute;
+		bottom: 0;
+		right: 0;
+		width: 60px;
+		height: 2px;
+		background-color: var(--color-accent);
+	}
+
+	.posts-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+		gap: 2rem;
+	}
+
+	/* Empty State */
+	.empty-state {
+		text-align: center;
+		padding: 4rem 2rem;
+		background-color: var(--color-card);
+		border: 1px dashed var(--color-border);
+		border-radius: 12px;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 1rem;
+	}
+
+	.empty-icon {
+		font-size: 3rem;
+	}
+
+	.empty-sub {
+		color: var(--color-text-muted);
+		font-size: 0.95rem;
+	}
+
+	.btn-admin-go {
+		margin-top: 1rem;
+	}
+
+	@media (max-width: 768px) {
+		.hero-image-container {
+			height: 220px;
+		}
+		
+		.intro-card {
+			padding: 1.5rem;
+		}
+		
+		.intro-quote {
+			font-size: 1.4rem;
+		}
+	}
+</style>

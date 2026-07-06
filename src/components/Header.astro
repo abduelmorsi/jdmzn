@@ -1,0 +1,125 @@
+---
+---
+<header class="site-header">
+  <div class="container header-container">
+    <a href="/" class="logo">
+      <span class="logo-main">جُودُ المُزن</span>
+      <span class="logo-sub">لَمْلَمَةُ شَعَث، وَشَيْءٌ مِنَ التَّحَلُّم</span>
+    </a>
+    
+    <nav class="nav-links">
+      <a href="/" class="nav-link">الرئيسية</a>
+      <a href="https://t.me/jdmzn" target="_blank" rel="noopener noreferrer" class="telegram-link">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="22" y1="2" x2="11" y2="13"></line>
+          <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+        </svg>
+        <span>قناتي على تليجرام</span>
+      </a>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    border-bottom: 1px solid var(--color-border);
+    padding: 1.5rem 0;
+    background-color: rgba(13, 26, 24, 0.8);
+    backdrop-filter: blur(8px);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  
+  .header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+  
+  .logo {
+    display: flex;
+    flex-direction: column;
+    color: var(--color-text-primary);
+  }
+  
+  .logo-main {
+    font-family: var(--font-serif);
+    font-size: 1.8rem;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    line-height: 1.2;
+    background: linear-gradient(135deg, var(--color-text-primary), var(--color-accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  
+  .logo-sub {
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+    margin-top: 0.2rem;
+    letter-spacing: 0.5px;
+  }
+  
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+  
+  .nav-link {
+    font-weight: 500;
+    color: var(--color-text-primary);
+    position: relative;
+    padding: 0.25rem 0;
+  }
+  
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background-color: var(--color-accent);
+    transition: var(--transition);
+  }
+  
+  .nav-link:hover::after {
+    width: 100%;
+  }
+  
+  .telegram-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: rgba(216, 150, 135, 0.1);
+    color: var(--color-accent);
+    padding: 0.5rem 1rem;
+    border-radius: 30px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    border: 1px solid rgba(216, 150, 135, 0.2);
+  }
+  
+  .telegram-link:hover {
+    background-color: var(--color-accent);
+    color: #0d1a18;
+    border-color: var(--color-accent);
+    box-shadow: 0 0 15px rgba(216, 150, 135, 0.25);
+  }
+
+  @media (max-width: 480px) {
+    .header-container {
+      flex-direction: column;
+      text-align: center;
+    }
+    
+    .nav-links {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+</style>
