@@ -56,7 +56,10 @@ export default config({
                 content: fields.child({
                   kind: 'block',
                   placeholder: 'اكتب محتوى التنبيه هنا...',
-                  formatting: 'inherit',
+                  formatting: {
+                    inlineMarks: 'inherit',
+                    softBreaks: 'inherit',
+                  },
                   links: 'inherit',
                 }),
               },
