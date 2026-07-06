@@ -1,0 +1,99 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import PostCard from '../../components/PostCard.astro';
+import { getCollection } from 'astro:content';
+
+// Fetch and sort posts by date
+const posts = await getCollection('posts');
+const sortedPosts = posts.sort((a, b) => 
+  new Date(b.data.publishDate).getTime() - new Date(a.data.publishDate).getTime()
+);
+---
+
+<Layout title="المدونة" description="تصفح جميع التدوينات والقصائد والخواطر المنشورة في مدونة جود المزن.">
+  <Header />
+  
+  <main class="blog-archive-main container fade-in">
+    <header class="archive-header">
+      <h1 class="archive-title">التدوينات</h1>
+      <p class="archive-desc">تأملات منثورة، وخواطر أدبية، ولملمة لشعث الفكر والروح.</p>
+    </header>
+
+    {sortedPosts.length === 0 ? (
+      <div class="empty-state">
+        <div class="empty-icon">✍️</div>
+        <p>لا توجد تدوينات منشورة بعد.</p>
+        <p class="empty-sub">ترقبوا نشر التدوينات الأولى قريبًا.</p>
+      </div>
+    ) : (
+      <div class="posts-grid">
+        {sortedPosts.map(post => (
+          <PostCard post={post} />
+        ))}
+      </div>
+    )}
+  </main>
+
+  <Footer />
+</Layout>
+
+<style>
+  .blog-archive-main {
+    padding-top: 3rem;
+    padding-bottom: 5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+  }
+
+  .archive-header {
+    text-align: center;
+    border-bottom: 1px solid var(--color-border);
+    padding-bottom: 2.5rem;
+  }
+
+  .archive-title {
+    font-size: 2.8rem;
+    font-weight: 800;
+    color: #fff;
+    margin-bottom: 0.75rem;
+  }
+
+  .archive-desc {
+    color: var(--color-text-muted);
+    font-size: 1.15rem;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+
+  .posts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 2rem;
+  }
+
+  /* Empty State */
+  .empty-state {
+    text-align: center;
+    padding: 5rem 2rem;
+    background-color: var(--color-card);
+    border: 1px dashed var(--color-border);
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .empty-icon {
+    font-size: 3.5rem;
+  }
+
+  .empty-sub {
+    color: var(--color-text-muted);
+    font-size: 1rem;
+  }
+</style>
