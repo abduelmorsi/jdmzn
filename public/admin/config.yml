@@ -3,6 +3,9 @@
 backend:
   name: github
   repo: abduelmorsi/jdmzn
+  # OAuth client, so contributors sign in with GitHub instead of pasting a token.
+  # Fine-grained tokens cannot reach a repo you are only a collaborator on.
+  base_url: https://jdmzn-cms.aboodelmorsi.workers.dev
 
 # Site-wide fallback only; the posts collection stores media entry-relative (see below).
 media_folder: src/assets
