@@ -4,7 +4,7 @@ interface Props {
     id: string;
     data: {
       title: string;
-      description: string;
+      description?: string;
       publishDate: string;
       coverImage?: string;
     }
@@ -43,7 +43,7 @@ const formatDate = (dateString: string) => {
       <a href={`/blog/${post.id}`}>{post.data.title}</a>
     </h3>
     
-    <p class="post-desc">{post.data.description}</p>
+    {post.data.description && <p class="post-desc">{post.data.description}</p>}
     
     <a href={`/blog/${post.id}`} class="read-more">
       <span>اقرأ المزيد</span>

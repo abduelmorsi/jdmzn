@@ -22,7 +22,7 @@ collections:
     preview_path: '/blog/{{filename}}'
     fields:
       - { name: title, label: العنوان, widget: string }
-      - { name: description, label: الوصف, widget: text }
+      - { name: description, label: الوصف, widget: text, required: false }
       - name: publishDate
         label: تاريخ النشر
         widget: datetime

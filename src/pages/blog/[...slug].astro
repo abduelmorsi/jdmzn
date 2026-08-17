@@ -48,7 +48,7 @@ const formatDate = (dateString: string) => {
           <time datetime={post.data.publishDate}>{formatDate(post.data.publishDate)}</time>
         </div>
         <h1 class="article-title">{post.data.title}</h1>
-        <p class="article-desc">{post.data.description}</p>
+        {post.data.description && <p class="article-desc">{post.data.description}</p>}
       </header>
       
       {post.data.coverImage && (
