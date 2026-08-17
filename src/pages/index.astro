@@ -21,17 +21,12 @@ const sortedPosts = posts.sort((a, b) =>
 		<!-- Hero Section -->
 		<section class="hero-section fade-in">
 			<div class="hero-image-container">
-				<Image src={heroBanner} alt="سنا صعب" class="hero-banner" widths={[800, 1400, 2000]} sizes="100vw" loading="eager" fetchpriority="high" />
+				<Image src={heroBanner} alt="" class="hero-banner" widths={[800, 1400, 2000]} sizes="100vw" loading="eager" fetchpriority="high" />
 				<div class="hero-overlay"></div>
-			</div>
-			
-			<div class="container hero-content">
-				<div class="intro-card">
+
+				<div class="container hero-content">
 					<p class="intro-quote">
-					"لملمةُ شعث، وشيءٌ من التحلم."
-				</p>
-					<p class="intro-text">
-						مساحة هادئة للكلمة الطيبة، والخواطر المنثورة، والتأملات الحية. هنا نجمع شتات الفكر في كلمات ونمضي معًا في دروب المعرفة.
+						"لملمةُ شعث، وشيءٌ من التحلم."
 					</p>
 				</div>
 			</div>
@@ -77,55 +72,52 @@ const sortedPosts = posts.sort((a, b) =>
 
 	.hero-image-container {
 		width: 100%;
-		height: 350px;
+		min-height: 30rem;
 		position: relative;
+		display: flex;
+		align-items: center;
+		justify-content: center;
 		overflow: hidden;
 	}
 
 	.hero-banner {
+		position: absolute;
+		inset: 0;
 		width: 100%;
 		height: 100%;
 		object-fit: cover;
-		border-radius: 0;
 	}
 
+	/* Holds a dark plateau behind the text before resolving to the page colour, so the
+	   type stays legible while the image still blends into the background below it. */
 	.hero-overlay {
 		position: absolute;
 		inset: 0;
-		background: linear-gradient(to bottom, rgba(13, 26, 24, 0.4), var(--color-bg));
+		background: linear-gradient(
+			to bottom,
+			rgba(13, 26, 24, 0.55) 0%,
+			rgba(13, 26, 24, 0.5) 55%,
+			rgba(13, 26, 24, 0.28) 78%,
+			var(--color-bg) 100%
+		);
 	}
 
 	.hero-content {
 		position: relative;
-		margin-top: -80px;
-		z-index: 10;
-	}
-
-	.intro-card {
-		background-color: var(--color-card);
-		border: 1px solid var(--color-border);
-		border-radius: 16px;
-		padding: 2.5rem;
+		z-index: 1;
 		text-align: center;
-		box-shadow: var(--shadow-lg);
-		backdrop-filter: blur(10px);
+		/* Keeps the text above the stretch where the overlay resolves to the page colour. */
+		padding-bottom: 4rem;
 	}
 
 	.intro-quote {
 		font-family: var(--font-serif);
-		font-size: 1.8rem;
+		font-size: 2rem;
 		font-weight: 700;
-		color: var(--color-accent);
+		color: #f7f4ee;
 		margin-bottom: 1rem;
 		font-style: italic;
-	}
-
-	.intro-text {
-		color: var(--color-text-muted);
-		max-width: 600px;
-		margin: 0 auto;
-		line-height: 1.8;
-		font-size: 1.05rem;
+		text-shadow: 0 1px 12px rgba(13, 26, 24, 0.5);
 	}
 
 	/* Posts Section */
@@ -181,15 +173,15 @@ const sortedPosts = posts.sort((a, b) =>
 
 	@media (max-width: 768px) {
 		.hero-image-container {
-			height: 220px;
+			min-height: 24rem;
 		}
-		
-		.intro-card {
-			padding: 1.5rem;
+
+		.hero-content {
+			padding-bottom: 2.5rem;
 		}
-		
+
 		.intro-quote {
-			font-size: 1.4rem;
+			font-size: 1.5rem;
 		}
 	}
 </style>
