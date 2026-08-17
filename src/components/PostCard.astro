@@ -103,7 +103,7 @@ const formatDate = (dateString: string) => {
   }
   
   .post-title {
-    font-size: 1.4rem;
+    font-size: 1.25rem;
     font-weight: 700;
     margin: 0;
     line-height: 1.4;
@@ -146,5 +146,15 @@ const formatDate = (dateString: string) => {
   
   .read-more:hover svg {
     transform: translateX(-4px);
+  }
+
+  @media (max-width: 768px) {
+    .post-content {
+      padding: 1.25rem;
+    }
+
+    .post-title {
+      font-size: 1.15rem;
+    }
   }
 </style>
