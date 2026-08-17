@@ -1,6 +1,8 @@
 ---
 import '../styles/global.css';
 import { ClientRouter } from 'astro:transitions';
+import { getImage } from 'astro:assets';
+import heroBanner from '../assets/hero_banner.png';
 
 interface Props {
 	title: string;
@@ -8,14 +10,20 @@ interface Props {
 	image?: string;
 }
 
-const { 
-	title, 
-	description = "سنا صعب - مدونة أدبية تعنى بلملمة الشعث وشيء من التحلم", 
-	image = "/hero_banner.png" 
+// Social scrapers handle jpg more reliably than webp, and a capped width keeps the
+// preview from pulling the multi-megabyte original.
+const defaultSocialImage = await getImage({ src: heroBanner, width: 1200, format: 'jpg' });
+
+const {
+	title,
+	description = "سنا صعب - مدونة أدبية تعنى بلملمة الشعث وشيء من التحلم",
+	image = defaultSocialImage.src
 } = Astro.props;
 
 // Determine current URL for SEO tags
 const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? Astro.url.origin);
+// Open Graph and Twitter require absolute image URLs; a relative path yields no preview.
+const socialImageURL = new URL(image, Astro.site ?? Astro.url.origin);
 ---
 
 <!DOCTYPE html>
@@ -28,11 +36,12 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? Astro.url.origin)
 		<link rel="icon" href="/favicon.ico" />
 		<meta name="generator" content={Astro.generator} />
 		<link rel="canonical" href={canonicalURL} />
+		<link rel="alternate" type="application/rss+xml" title="سنا صعب" href={new URL('rss.xml', Astro.site)} />
 
 		<!-- Google Fonts for Arabic Typography -->
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-		<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&family=Aref+Ruqaa:wght@400;700&family=Tajawal:wght@400;500;700;800&family=Alexandria:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
 
 		<!-- Primary Meta Tags -->
 		<title>{title} | سنا صعب</title>
@@ -43,14 +52,14 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? Astro.url.origin)
 		<meta property="og:url" content={canonicalURL} />
 		<meta property="og:title" content={`${title} | سنا صعب`} />
 		<meta property="og:description" content={description} />
-		<meta property="og:image" content={image} />
+		<meta property="og:image" content={socialImageURL} />
 
 		<!-- Twitter -->
 		<meta property="twitter:card" content="summary_large_image" />
 		<meta property="twitter:url" content={canonicalURL} />
 		<meta property="twitter:title" content={`${title} | سنا صعب`} />
 		<meta property="twitter:description" content={description} />
-		<meta property="twitter:image" content={image} />
+		<meta property="twitter:image" content={socialImageURL} />
 
 		<!-- View Transitions -->
 		<ClientRouter />

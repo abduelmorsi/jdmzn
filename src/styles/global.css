@@ -9,8 +9,8 @@
   --color-border: #e6dfcf;       /* Soft warm cream border */
   --color-accent-rgb: 59, 92, 67; /* Accent RGB values for transparency */
   
-  --font-serif: 'Amiri', 'Aref Ruqaa', Georgia, serif;
-  --font-sans: 'Tajawal', 'Alexandria', system-ui, -apple-system, sans-serif;
+  --font-serif: 'Amiri', Georgia, serif;
+  --font-sans: 'Tajawal', system-ui, -apple-system, sans-serif;
   
   --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
   --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);

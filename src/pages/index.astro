@@ -4,6 +4,8 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import PostCard from '../components/PostCard.astro';
 import { getCollection } from 'astro:content';
+import { Image } from 'astro:assets';
+import heroBanner from '../assets/hero_banner.png';
 
 // Fetch and sort posts by date
 const posts = await getCollection('posts');
@@ -19,7 +21,7 @@ const sortedPosts = posts.sort((a, b) =>
 		<!-- Hero Section -->
 		<section class="hero-section fade-in">
 			<div class="hero-image-container">
-				<img src="/hero_banner.png" alt="سنا صعب" class="hero-banner" />
+				<Image src={heroBanner} alt="سنا صعب" class="hero-banner" widths={[800, 1400, 2000]} sizes="100vw" loading="eager" fetchpriority="high" />
 				<div class="hero-overlay"></div>
 			</div>
 			
@@ -78,7 +80,6 @@ const sortedPosts = posts.sort((a, b) =>
 		height: 350px;
 		position: relative;
 		overflow: hidden;
-		border-bottom: 1px solid var(--color-border);
 	}
 
 	.hero-banner {

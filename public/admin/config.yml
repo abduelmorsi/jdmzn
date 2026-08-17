@@ -4,8 +4,11 @@ backend:
   name: github
   repo: abduelmorsi/jdmzn
 
-media_folder: public/images/posts
-public_folder: /images/posts
+# Images live under src/ so Astro's <Image> can optimize them. public_folder is the
+# path written to frontmatter, which Astro's image() schema helper resolves from the
+# project root at build time — it is not a served URL.
+media_folder: src/assets/posts
+public_folder: /src/assets/posts
 
 output:
   omit_empty_optional_fields: true

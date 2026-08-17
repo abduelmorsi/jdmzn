@@ -1,14 +1,9 @@
 ---
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+
 interface Props {
-  post: {
-    id: string;
-    data: {
-      title: string;
-      description?: string;
-      publishDate: string;
-      coverImage?: string;
-    }
-  }
+  post: CollectionEntry<'posts'>;
 }
 
 const { post } = Astro.props;
@@ -31,7 +26,7 @@ const formatDate = (dateString: string) => {
 <article class="post-card fade-in">
   {post.data.coverImage && (
     <a href={`/blog/${post.id}`} class="cover-image-link">
-      <img src={post.data.coverImage} alt={post.data.title} class="post-cover" loading="lazy" />
+      <Image src={post.data.coverImage} alt={post.data.title} class="post-cover" widths={[400, 800]} sizes="(max-width: 768px) 100vw, 400px" loading="lazy" />
     </a>
   )}
   <div class="post-content">
