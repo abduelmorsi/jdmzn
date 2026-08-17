@@ -6,7 +6,7 @@ export async function GET(context) {
 
   return rss({
     title: 'سنا صعب',
-    description: 'مدونة أدبية تعنى بلملمة الشعث وشيء من التحلم',
+    description: 'سنا صعب - مدونة أدبية شخصية',
     site: context.site,
     customData: '<language>ar</language>',
     items: posts
