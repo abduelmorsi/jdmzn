@@ -15,7 +15,6 @@ collections:
     label: التدوينات
     label_singular: تدوينة
     folder: src/content/posts
-    extension: mdoc
     format: yaml-frontmatter
     slug: '{{fields._slug}}'
     thumbnail: coverImage

@@ -152,6 +152,10 @@ const formatDate = (dateString: string) => {
   
   .article-content :global(p) {
     margin-bottom: 1.75rem;
+    /* Markdown keeps a soft line break as a newline in the output HTML, which the
+       browser would otherwise collapse to a space. The CMS editor can only write
+       soft breaks, so honour them as real line breaks. */
+    white-space: pre-line;
   }
   
   .article-content :global(h2),
