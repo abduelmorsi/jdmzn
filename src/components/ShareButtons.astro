@@ -1,0 +1,165 @@
+---
+interface Props {
+  title: string;
+  url: string;
+}
+
+const { title, url } = Astro.props;
+
+const encodedUrl = encodeURIComponent(url);
+const encodedTitle = encodeURIComponent(title);
+
+const links = [
+  {
+    label: 'تليجرام',
+    href: `https://t.me/share/url?url=${encodedUrl}&text=${encodedTitle}`,
+    path: 'M21.5 4.5 2.5 11.8l5.4 1.8 2 6.2 2.9-3.5 5 3.7 3.7-15.5Z',
+  },
+  {
+    label: 'واتساب',
+    href: `https://wa.me/?text=${encodedTitle}%20${encodedUrl}`,
+    path: 'M20.5 3.5A10 10 0 0 0 3.6 15.2L2.5 21.5l6.4-1.1A10 10 0 1 0 20.5 3.5Zm-4.2 12.6c-.3.8-1.6 1.5-2.3 1.5-.6.1-1.3.1-4-1.7s-3.6-4.1-3.7-4.3c-.1-.2-.7-1.1-.7-2.1 0-1 .5-1.5.7-1.7.2-.2.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.3 0 .5l-.4.5-.3.3c-.1.1-.2.3 0 .5.2.3.7 1.1 1.4 1.8.9.8 1.7 1.1 2 1.2.2.1.4.1.5-.1l.7-.9c.2-.2.3-.2.5-.1l2 1c.2.1.3.2.4.3 0 .1 0 .7-.4 1.1Z',
+  },
+  {
+    label: 'إكس',
+    href: `https://twitter.com/intent/tweet?url=${encodedUrl}&text=${encodedTitle}`,
+    path: 'M18.2 2.2h3.4l-7.4 8.5 8.7 11.1h-6.8l-5.3-6.9-6.1 6.9H1.3l7.9-9-8.3-10.6h7l4.8 6.4 5.5-6.4Zm-1.2 17.6h1.9L7.1 4.1H5.1l11.9 15.7Z',
+  },
+];
+---
+
+<div class="share" data-share-title={title} data-share-url={url}>
+  <span class="share-label">شارك التدوينة</span>
+  <div class="share-buttons">
+    <button type="button" class="share-btn share-native" hidden>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12v7a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7M12 16V3m0 0L8 7m4-4 4 4"/></svg>
+      <span>مشاركة</span>
+    </button>
+
+    {links.map((link) => (
+      <a class="share-btn" href={link.href} target="_blank" rel="noopener noreferrer" aria-label={`مشاركة على ${link.label}`}>
+        <svg viewBox="0 0 24 24" aria-hidden="true" class="filled"><path d={link.path} /></svg>
+        <span>{link.label}</span>
+      </a>
+    ))}
+
+    <button type="button" class="share-btn share-copy">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+      <span class="copy-text">نسخ الرابط</span>
+    </button>
+  </div>
+</div>
+
+<script>
+  // Runs on every view transition, so bind per-element rather than once per page load.
+  const setup = () => {
+    document.querySelectorAll<HTMLElement>('.share').forEach((share) => {
+      if (share.dataset.bound) return;
+      share.dataset.bound = 'true';
+
+      const title = share.dataset.shareTitle ?? document.title;
+      const url = share.dataset.shareUrl ?? location.href;
+
+      const nativeBtn = share.querySelector<HTMLButtonElement>('.share-native');
+      if (nativeBtn && typeof navigator.share === 'function') {
+        nativeBtn.hidden = false;
+        nativeBtn.addEventListener('click', async () => {
+          // AbortError just means the user dismissed the sheet.
+          try {
+            await navigator.share({ title, url });
+          } catch (err) {
+            if ((err as Error)?.name !== 'AbortError') console.error(err);
+          }
+        });
+      }
+
+      const copyBtn = share.querySelector<HTMLButtonElement>('.share-copy');
+      const copyText = copyBtn?.querySelector('.copy-text');
+      copyBtn?.addEventListener('click', async () => {
+        try {
+          await navigator.clipboard.writeText(url);
+          if (!copyText) return;
+          copyText.textContent = 'تم النسخ';
+          setTimeout(() => { copyText.textContent = 'نسخ الرابط'; }, 2000);
+        } catch {
+          // Clipboard needs a secure context; fall back to letting the reader copy it.
+          window.prompt('انسخ الرابط', url);
+        }
+      });
+    });
+  };
+
+  setup();
+  document.addEventListener('astro:page-load', setup);
+</script>
+
+<style>
+  .share {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--color-border);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .share-label {
+    font-family: var(--font-serif);
+    font-size: 1.1rem;
+    color: var(--color-text-muted);
+  }
+
+  .share-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.75rem;
+  }
+
+  .share-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.55rem 1.1rem;
+    border: 1px solid var(--color-border);
+    border-radius: 999px;
+    background-color: transparent;
+    color: var(--color-text-muted);
+    font-family: var(--font-sans);
+    font-size: 0.95rem;
+    line-height: 1;
+    cursor: pointer;
+    text-decoration: none;
+    transition: var(--transition);
+  }
+
+  .share-btn:hover,
+  .share-btn:focus-visible {
+    color: var(--color-accent);
+    border-color: var(--color-accent);
+    background-color: rgba(var(--color-accent-rgb), 0.06);
+  }
+
+  .share-btn svg {
+    width: 17px;
+    height: 17px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    flex-shrink: 0;
+  }
+
+  .share-btn svg.filled {
+    fill: currentColor;
+    stroke: none;
+  }
+
+  @media (max-width: 480px) {
+    .share-btn span { display: none; }
+    .share-btn { padding: 0.7rem; }
+    .share-native span { display: inline; }
+  }
+</style>

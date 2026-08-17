@@ -4,22 +4,48 @@ import { Image, getImage } from 'astro:assets';
 import Layout from '../../layouts/Layout.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
+import ShareButtons from '../../components/ShareButtons.astro';
 
 export async function getStaticPaths() {
   const posts = await getCollection('posts');
-  return posts.map(post => ({
+  // Newest first, matching the listing order, so "previous" reads as the older post.
+  const ordered = posts.sort(
+    (a, b) => new Date(b.data.publishDate).getTime() - new Date(a.data.publishDate).getTime()
+  );
+
+  return ordered.map((post, i) => ({
     params: { slug: post.id },
-    props: { post },
+    props: { post, newer: ordered[i - 1], older: ordered[i + 1] },
   }));
 }
 
-const { post } = Astro.props;
+const { post, newer, older } = Astro.props;
 const { Content } = await render(post);
+
+const postURL = new URL(Astro.url.pathname, Astro.site ?? Astro.url.origin).href;
 
 // Referencing the raw asset here would emit the multi-megabyte original into the build.
 const socialImage = post.data.coverImage
   ? await getImage({ src: post.data.coverImage, width: 1200, format: 'jpg' })
   : undefined;
+
+// Arabic has six plural categories, so pick the noun form via Intl rather than n > 1.
+// The singular and dual forms carry the count themselves, so they drop the numeral:
+// "دقيقة" and "دقيقتان", never "١ دقيقة" or "٢ دقيقتان".
+const MINUTE_FORMS: Record<string, string> = {
+  zero: 'دقيقة',
+  one: 'دقيقة',
+  two: 'دقيقتان',
+  few: 'دقائق',
+  many: 'دقيقة',
+  other: 'دقيقة',
+};
+
+const words = post.body?.trim().split(/\s+/).filter(Boolean).length ?? 0;
+const minutes = Math.max(1, Math.round(words / 180)); // ~180 wpm for Arabic prose
+const plural = new Intl.PluralRules('ar').select(minutes);
+const countPrefix = plural === 'one' || plural === 'two' ? '' : `${minutes.toLocaleString('ar-EG')} `;
+const readingTime = `${countPrefix}${MINUTE_FORMS[plural]} قراءة`;
 
 // Format Arabic Date
 const formatDate = (dateString: string) => {
@@ -52,6 +78,8 @@ const formatDate = (dateString: string) => {
       <header class="article-header">
         <div class="post-meta">
           <time datetime={post.data.publishDate}>{formatDate(post.data.publishDate)}</time>
+          <span class="meta-sep" aria-hidden="true">·</span>
+          <span>{readingTime}</span>
         </div>
         <h1 class="article-title">{post.data.title}</h1>
         {post.data.description && <p class="article-desc">{post.data.description}</p>}
@@ -66,7 +94,26 @@ const formatDate = (dateString: string) => {
       <div class="article-content">
         <Content />
       </div>
+
+      <ShareButtons title={post.data.title} url={postURL} />
     </article>
+
+    {(newer || older) && (
+      <nav class="post-nav" aria-label="تنقل بين التدوينات">
+        {older ? (
+          <a href={`/blog/${older.id}`} class="post-nav-link is-older">
+            <span class="post-nav-label">التدوينة السابقة</span>
+            <span class="post-nav-title">{older.data.title}</span>
+          </a>
+        ) : <span />}
+        {newer && (
+          <a href={`/blog/${newer.id}`} class="post-nav-link is-newer">
+            <span class="post-nav-label">التدوينة التالية</span>
+            <span class="post-nav-title">{newer.data.title}</span>
+          </a>
+        )}
+      </nav>
+    )}
   </main>
   
   <Footer />
@@ -114,6 +161,64 @@ const formatDate = (dateString: string) => {
     color: var(--color-text-muted);
     margin-bottom: 0.75rem;
   }
+
+  .meta-sep {
+    margin: 0 0.5rem;
+    opacity: 0.5;
+  }
+
+  .post-nav {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+
+  .post-nav-link {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    padding: 1.25rem 1.5rem;
+    background-color: var(--color-card);
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    text-decoration: none;
+    transition: var(--transition);
+  }
+
+  .post-nav-link.is-newer {
+    text-align: left;
+  }
+
+  .post-nav-link:hover,
+  .post-nav-link:focus-visible {
+    border-color: var(--color-accent);
+    box-shadow: var(--shadow-md);
+  }
+
+  .post-nav-label {
+    font-family: var(--font-sans);
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+  }
+
+  .post-nav-title {
+    font-family: var(--font-serif);
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--color-text-primary);
+    line-height: 1.5;
+  }
+
+  @media (max-width: 600px) {
+    .post-nav {
+      grid-template-columns: 1fr;
+    }
+
+    .post-nav-link.is-newer {
+      text-align: right;
+    }
+  }
   
   .article-title {
     font-size: 2.5rem;
@@ -153,7 +258,12 @@ const formatDate = (dateString: string) => {
     font-size: 1.15rem;
     line-height: 2;
     color: var(--color-text-primary);
-    text-align: justify;
+    /* Browsers justify Arabic by stretching spaces only — no kashida — which opens
+       uneven gaps. A natural edge keeps word spacing even. */
+    text-align: start;
+    /* ~65 characters per line, the comfortable reading measure. */
+    max-width: 38rem;
+    margin-inline: auto;
   }
   
   .article-content :global(p) {
