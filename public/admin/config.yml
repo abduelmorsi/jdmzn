@@ -4,11 +4,9 @@ backend:
   name: github
   repo: abduelmorsi/jdmzn
 
-# Images live under src/ so Astro's <Image> can optimize them. public_folder is the
-# path written to frontmatter, which Astro's image() schema helper resolves from the
-# project root at build time — it is not a served URL.
-media_folder: src/assets/posts
-public_folder: /src/assets/posts
+# Site-wide fallback only; the posts collection stores media entry-relative (see below).
+media_folder: src/assets
+public_folder: /src/assets
 
 output:
   omit_empty_optional_fields: true
@@ -20,9 +18,14 @@ collections:
     folder: src/content/posts
     format: yaml-frontmatter
     slug: '{{fields._slug}}'
+    # One folder per post holding index.md and its images. Empty media/public folders
+    # make uploads entry-relative, which is the only form Astro can optimize in a body.
+    path: '{{slug}}/index'
+    media_folder: ''
+    public_folder: ''
     thumbnail: coverImage
     sortable_fields: [publishDate, title]
-    preview_path: '/blog/{{filename}}'
+    preview_path: '/blog/{{dirname}}'
     fields:
       - { name: title, label: العنوان, widget: string }
       - { name: description, label: الوصف, widget: text, required: false }
