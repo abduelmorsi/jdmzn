@@ -1,6 +1,6 @@
 ---
 title: سيرةُ المترجّلين
-description: عن غرباء المقاعد العابرة
+description: غرباء المقاعد العابرة
 publishDate: 2026-01-16
 coverImage: IMG_20260819_215248.jpg
 ---
