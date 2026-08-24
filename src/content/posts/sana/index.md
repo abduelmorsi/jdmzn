@@ -1,5 +1,5 @@
 ---
-title: يدّ تَسعُها ما وسِع السماء
+title: يدّ يَسعُها ما وسِع السماء
 description: عن السنا..
 publishDate: 2024-05-18
 coverImage: IMG_20260820_001752-01.jpeg
