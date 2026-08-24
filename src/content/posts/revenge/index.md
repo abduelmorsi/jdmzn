@@ -1,6 +1,6 @@
 ---
 title: وجهُ القلبِ المكلوم
-description: عن الذاكرة التي تُنبت للثأر جذورًا
+description: ذاكرةٌ تُنبت للثأر جذورًا
 publishDate: 2023-12-12
 coverImage: IMG_20260824_234205.jpg
 ---
