@@ -1,6 +1,6 @@
 ---
 title: عتبةُ الصفاء السرمديّ
-description: عن دماءٍ تروي أغصان الخلود
+description: دماءٌ تروي أغصان الخلود
 publishDate: 2024-08-01
 coverImage: IMG_20260825_163419.jpg
 ---
