@@ -1,6 +1,6 @@
 ---
 title: أبجديّات التحنان
-description: عن كلمةٍ نبويّة وهبت عمرًا
+description: كلمةٌ نبويّة وهبت عمرًا
 publishDate: 2023-12-13
 coverImage: IMG_20260825_004510.jpg
 ---
