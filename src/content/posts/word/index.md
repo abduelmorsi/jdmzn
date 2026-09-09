@@ -1,6 +1,6 @@
 ---
 title: فسيلةُ الكَلِم
-description: عن ضفاف الكلمة الطيّبة
+description: ضفافُ الكلمة الطيّبة
 publishDate: 2021-12-15
 coverImage: IMG_20260909_170320.jpg
 ---
