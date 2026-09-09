@@ -1,7 +1,7 @@
 ---
 title: وَتَرجونَ ما لا يَرجون
 description: اجتماعُ الألم، ومفارقةُ الرّجاء
-publishDate: 2026-09-09
+publishDate: 2023-12-18
 coverImage: IMG_20260910_000247.jpg
 ---
 
