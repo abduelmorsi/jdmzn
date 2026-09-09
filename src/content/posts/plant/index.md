@@ -2,7 +2,7 @@
 title: أيادٍ منمّقة بالتّراب
 description: فقهُ "فليغرسها"
 publishDate: 2023-12-17
-coverImage: IMG_20260909_201901.jpg
+coverImage: IMG_20260910_002311.png
 ---
 
 راكنًا للنيّات، لا للحصائل
