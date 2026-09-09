@@ -1,5 +1,5 @@
 ---
-title: كما عهدتُ منك
+title: كما عهدتُ مِنك
 description: مناجاةٌ على أعتابه
 publishDate: 2023-05-12
 coverImage: IMG_20260909_193944_966.jpg
