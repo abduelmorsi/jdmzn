@@ -44,11 +44,16 @@ const sortedPosts = posts.sort((a, b) =>
 					<a href="/keystatic" class="btn btn-primary btn-admin-go">الذهاب للوحة التحكم</a>
 				</div>
 			) : (
+				<>
 				<div class="posts-grid">
-					{sortedPosts.map(post => (
+					{sortedPosts.slice(0, 3).map(post => (
 						<PostCard post={post} />
 					))}
 				</div>
+				<div class="posts-more">
+					<a href="/blog" class="btn btn-primary">عرض كل التدوينات</a>
+				</div>
+				</>
 			)}
 		</section>
 	</main>
@@ -144,6 +149,12 @@ const sortedPosts = posts.sort((a, b) =>
 		display: grid;
 		grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
 		gap: 2rem;
+	}
+
+	.posts-more {
+		display: flex;
+		justify-content: center;
+		margin-top: 2.5rem;
 	}
 
 	/* Empty State */
