@@ -1,7 +1,7 @@
 ---
 title: وكذبت الأحزان!
 description: تأملاتٌ في أفياءِ أحسن القصص
-publishDate: 2025-03-15
+publishDate: 2026-03-15
 coverImage: 1788955284968-02.jpeg
 ---
 
